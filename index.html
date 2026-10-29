@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxeJewels - Elegant Jewellery</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --gold: #d4af37;
+      --gold-dark: #b8860b;
+      --dark: #121212;
+      --cream: #f9f5f0;
+    }
+
+    * { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #fafafa;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, .brand {
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: rgba(18, 18, 18, 0.95) !important;
+      backdrop-filter: blur(10px);
+      transition: all 0.4s ease;
+      padding: 15px 0;
+    }
+    .navbar.scrolled {
+      padding: 8px 0;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    }
+    .navbar-brand {
+      font-size: 1.8rem;
+      color: var(--gold) !important;
+      letter-spacing: 1px;
+    }
+    .nav-link {
+      color: #eee !important;
+      font-weight: 500;
+      margin: 0 8px;
+      position: relative;
+      transition: 0.3s;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: var(--gold) !important;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gold);
+      transition: 0.3s;
+    }
+    .nav-link:hover::after { width: 100%; }
+
+    .cart-btn {
+      position: relative;
+      color: var(--gold) !important;
+      border: 1px solid var(--gold);
+      border-radius: 50px;
+      padding: 6px 16px;
+    }
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: #e53935;
+      color: white;
+      font-size: 0.7rem;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+
+    /* Hero */
+    .hero {
+      height: 100vh;
+      min-height: 650px;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 80%;
+      height: 150%;
+      background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 70%);
+      animation: float 12s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-40px) rotate(5deg); }
+    }
+    .hero-content { position: relative; z-index: 2; }
+    .hero h1 {
+      font-size: 3.8rem;
+      color: white;
+      line-height: 1.2;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 0.3s;
+    }
+    .hero h1 span { color: var(--gold); }
+    .hero p {
+      color: #ccc;
+      font-size: 1.2rem;
+      max-width: 500px;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 0.6s;
+    }
+    .hero .btn-gold {
+      background: var(--gold);
+      color: #111;
+      border: none;
+      padding: 14px 36px;
+      font-weight: 600;
+      border-radius: 50px;
+      letter-spacing: 1px;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 0.9s;
+      transition: all 0.3s;
+    }
+    .hero .btn-gold:hover {
+      background: var(--gold-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(212,175,55,0.4);
+    }
+    .hero-img {
+      opacity: 0;
+      animation: fadeInRight 1.2s ease forwards 0.5s;
+    }
+    .hero-img img {
+      border-radius: 20px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+      transition: transform 0.6s;
+    }
+    .hero-img:hover img { transform: scale(1.03); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInRight {
+      from { opacity: 0; transform: translateX(60px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* Sections */
+    .section-title {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 15px;
+      position: relative;
+    }
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 3px;
+      background: var(--gold);
+      margin: 15px auto 0;
+    }
+    .section-subtitle {
+      text-align: center;
+      color: #777;
+      margin-bottom: 50px;
+    }
+
+    /* Categories */
+    .category-card {
+      background: white;
+      border-radius: 16px;
+      padding: 35px 20px;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 1px solid #eee;
+      cursor: pointer;
+      height: 100%;
+    }
+    .category-card:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      border-color: var(--gold);
+    }
+    .category-card i {
+      font-size: 2.8rem;
+      color: var(--gold);
+      margin-bottom: 15px;
+      transition: 0.4s;
+    }
+    .category-card:hover i {
+      transform: scale(1.2) rotate(5deg);
+    }
+
+    /* Product Cards */
+    .product-card {
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      border: 1px solid #f0f0f0;
+      height: 100%;
+      position: relative;
+    }
+    .product-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    }
+    .product-img-wrap {
+      position: relative;
+      overflow: hidden;
+      height: 260px;
+    }
+    .product-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .product-card:hover .product-img { transform: scale(1.1); }
+    .product-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: 0.4s;
+    }
+    .product-card:hover .product-overlay { opacity: 1; }
+    .btn-add {
+      background: var(--gold);
+      color: #111;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 50px;
+      font-weight: 600;
+      transform: translateY(20px);
+      transition: all 0.4s;
+    }
+    .product-card:hover .btn-add { transform: translateY(0); }
+    .btn-add:hover {
+      background: var(--gold-dark);
+      color: white;
+    }
+    .product-body { padding: 20px; }
+    .product-title {
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin-bottom: 5px;
+    }
+    .product-price {
+      color: var(--gold-dark);
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+    .badge-new {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: var(--gold);
+      color: #111;
+      font-size: 0.75rem;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 600;
+      z-index: 2;
+    }
+
+    /* About */
+    .about-section { background: var(--cream); }
+    .feature-box {
+      text-align: center;
+      padding: 30px 20px;
+      transition: 0.3s;
+    }
+    .feature-box:hover { transform: translateY(-8px); }
+    .feature-box i {
+      font-size: 2.5rem;
+      color: var(--gold);
+      margin-bottom: 15px;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--dark);
+      color: #ccc;
+      padding: 60px 0 25px;
+    }
+    footer h5, footer h6 { color: var(--gold); }
+    footer a {
+      color: #aaa;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    footer a:hover { color: var(--gold); }
+
+    /* Cart Modal */
+    .modal-content {
+      border-radius: 16px;
+      border: none;
+    }
+    .cart-item {
+      border-bottom: 1px solid #eee;
+      padding: 15px 0;
+    }
+    .cart-item img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    /* Scroll Animation */
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease;
+    }
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 991px) {
+      .hero h1 { font-size: 2.8rem; }
+      .hero { height: auto; padding: 120px 0 80px; }
+    }
+    @media (max-width: 576px) {
+      .hero h1 { font-size: 2.2rem; }
+      .product-img-wrap { height: 200px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand brand" href="#">
+        <i class="bi bi-gem me-2"></i>LuxeJewels
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#collections">Collections</a></li>
+          <li class="nav-item"><a class="nav-link" href="#products">Shop</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+        <button class="btn cart-btn" data-bs-toggle="modal" data-bs-target="#cartModal">
+          <i class="bi bi-bag"></i>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 hero-content">
+          <h1>Timeless Elegance<br><span>Crafted for You</span></h1>
+          <p class="mt-4 mb-4">Discover exquisite jewellery that tells your unique story. Handcrafted with passion and the finest materials.</p>
+          <a href="#products" class="btn btn-gold">Explore Collection <i class="bi bi-arrow-right ms-2"></i></a>
+        </div>
+        <div class="col-lg-6 hero-img text-center mt-5 mt-lg-0">
+          <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&h=500&fit=crop" 
+               alt="Luxury Jewellery" class="img-fluid" style="max-height: 480px; object-fit: cover;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Collections -->
+  <section class="py-5" id="collections">
+    <div class="container">
+      <h2 class="section-title animate-on-scroll">Our Collections</h2>
+      <p class="section-subtitle animate-on-scroll">Curated pieces for every occasion</p>
+      <div class="row g-4">
+        <div class="col-6 col-md-3">
+          <div class="category-card animate-on-scroll">
+            <i class="bi bi-circle"></i>
+            <h5>Rings</h5>
+            <p class="text-muted small mb-0">Engagement & Fashion</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="category-card animate-on-scroll">
+            <i class="bi bi-heart"></i>
+            <h5>Necklaces</h5>
+            <p class="text-muted small mb-0">Pendants & Chains</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="category-card animate-on-scroll">
+            <i class="bi bi-stars"></i>
+            <h5>Earrings</h5>
+            <p class="text-muted small mb-0">Studs & Drops</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="category-card animate-on-scroll">
+            <i class="bi bi-watch"></i>
+            <h5>Bracelets</h5>
+            <p class="text-muted small mb-0">Bangles & Cuffs</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products -->
+  <section class="py-5 bg-white" id="products">
+    <div class="container">
+      <h2 class="section-title animate-on-scroll">Featured Pieces</h2>
+      <p class="section-subtitle animate-on-scroll">Handpicked jewellery for the modern you</p>
+      <div class="row g-4" id="productGrid"></div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="py-5 about-section" id="about">
+    <div class="container">
+      <h2 class="section-title animate-on-scroll">Why Choose LuxeJewels</h2>
+      <p class="section-subtitle animate-on-scroll">Excellence in every detail</p>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="feature-box animate-on-scroll">
+            <i class="bi bi-gem"></i>
+            <h5>Premium Quality</h5>
+            <p class="text-muted">Only the finest diamonds, gold and gemstones sourced ethically.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-box animate-on-scroll">
+            <i class="bi bi-truck"></i>
+            <h5>Free Shipping</h5>
+            <p class="text-muted">Complimentary insured delivery on all orders across India.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-box animate-on-scroll">
+            <i class="bi bi-arrow-repeat"></i>
+            <h5>Easy Returns</h5>
+            <p class="text-muted">30-day hassle-free returns & lifetime polishing service.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contact">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <h5 class="brand mb-3"><i class="bi bi-gem me-2"></i>LuxeJewels</h5>
+          <p>Crafting timeless jewellery since 2010. Each piece is a celebration of beauty and craftsmanship.</p>
+        </div>
+        <div class="col-6 col-md-2">
+          <h6 class="mb-3">Shop</h6>
+          <ul class="list-unstyled">
+            <li><a href="#products">All Jewellery</a></li>
+            <li><a href="#collections">Collections</a></li>
+            <li><a href="#">New Arrivals</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md-3">
+          <h6 class="mb-3">Support</h6>
+          <ul class="list-unstyled">
+            <li><a href="#">Size Guide</a></li>
+            <li><a href="#">Shipping Info</a></li>
+            <li><a href="#">Returns</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h6 class="mb-3">Connect</h6>
+          <p class="mb-2"><i class="bi bi-envelope me-2"></i>hello@luxejewels.com</p>
+          <p class="mb-3"><i class="bi bi-telephone me-2"></i>+91 98765 43210</p>
+          <div class="d-flex gap-3">
+            <a href="#"><i class="bi bi-instagram fs-4"></i></a>
+            <a href="#"><i class="bi bi-facebook fs-4"></i></a>
+            <a href="#"><i class="bi bi-pinterest fs-4"></i></a>
+          </div>
+        </div>
+      </div>
+      <hr class="my-4 border-secondary">
+      <p class="text-center mb-0 text-secondary">© 2025 LuxeJewels. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Cart Modal -->
+  <div class="modal fade" id="cartModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header border-0">
+          <h5 class="modal-title"><i class="bi bi-bag me-2"></i>Your Bag</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div id="cartItems">
+            <p class="text-muted text-center py-5">Your bag is empty</p>
+          </div>
+        </div>
+        <div class="modal-footer border-0 d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Total: ₹<span id="cartTotal">0</span></h5>
+          <button class="btn px-4" id="checkoutBtn" style="background: var(--gold); color:#111; border:none;">
+            Checkout
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const products = [
+      { id: 1,  name: "Diamond Solitaire Ring",       price: 89999,  category: "Rings",     image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=400&h=400&fit=crop", new: true },
+      { id: 2,  name: "Pearl Drop Earrings",          price: 12999,  category: "Earrings",  image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&h=400&fit=crop" },
+      { id: 3,  name: "22K Gold Chain Necklace",      price: 45999,  category: "Necklaces", image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400&h=400&fit=crop", new: true },
+      { id: 4,  name: "Rose Gold Bangle Set",         price: 28999,  category: "Bracelets", image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=400&h=400&fit=crop" },
+      { id: 5,  name: "Sapphire Halo Ring",           price: 67999,  category: "Rings",     image: "https://images.unsplash.com/photo-1603561591411-70499a7b0a4a?w=400&h=400&fit=crop" },
+      { id: 6,  name: "Emerald Pendant Necklace",     price: 54999,  category: "Necklaces", image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=400&fit=crop" },
+      { id: 7,  name: "Diamond Stud Earrings",        price: 34999,  category: "Earrings",  image: "https://images.unsplash.com/photo-1630019852942-f89202989a59?w=400&h=400&fit=crop", new: true },
+      { id: 8,  name: "Diamond Tennis Bracelet",      price: 99999,  category: "Bracelets", image: "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=400&h=400&fit=crop" },
+      { id: 9,  name: "Traditional Jhumka Earrings",  price: 8999,   category: "Earrings",  image: "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=400&h=400&fit=crop" },
+      { id: 10, name: "Platinum Wedding Band",        price: 74999,  category: "Rings",     image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=400&h=400&fit=crop" },
+      { id: 11, name: "Kundan Choker Set",            price: 38999,  category: "Necklaces", image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400&h=400&fit=crop", new: true },
+      { id: 12, name: "Antique Gold Bracelet",        price: 24999,  category: "Bracelets", image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=400&h=400&fit=crop" },
+      { id: 13, name: "Ruby Cocktail Ring",           price: 59999,  category: "Rings",     image: "https://images.unsplash.com/photo-1603561591411-70499a7b0a4a?w=400&h=400&fit=crop" },
+      { id: 14, name: "Layered Gold Chain",           price: 19999,  category: "Necklaces", image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=400&fit=crop" },
+      { id: 15, name: "Hoop Diamond Earrings",        price: 27999,  category: "Earrings",  image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&h=400&fit=crop" },
+      { id: 16, name: "Charm Bracelet",               price: 15999,  category: "Bracelets", image: "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=400&h=400&fit=crop", new: true }
+    ];
+
+    let cart = [];
+
+    function formatPrice(num) {
+      return num.toLocaleString('en-IN');
+    }
+
+    function renderProducts() {
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = products.map(p => `
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="product-card animate-on-scroll">
+            ${p.new ? '<span class="badge-new">New</span>' : ''}
+            <div class="product-img-wrap">
+              <img src="${p.image}" class="product-img" alt="${p.name}" 
+                   onerror="this.src='https://via.placeholder.com/400x400/1a1a1a/d4af37?text=Jewellery'">
+              <div class="product-overlay">
+                <button class="btn btn-add" onclick="addToCart(${p.id})">
+                  <i class="bi bi-bag-plus me-1"></i> Add to Bag
+                </button>
+              </div>
+            </div>
+            <div class="product-body">
+              <div class="text-muted small">${p.category}</div>
+              <div class="product-title">${p.name}</div>
+              <div class="product-price">₹${formatPrice(p.price)}</div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      observeElements();
+    }
+
+    function addToCart(id) {
+      const product = products.find(p => p.id === id);
+      const existing = cart.find(item => item.id === id);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ ...product, qty: 1 });
+      }
+      updateCartUI();
+
+      const btn = event.target.closest('button');
+      const original = btn.innerHTML;
+      btn.innerHTML = '<i class="bi bi-check-lg"></i> Added';
+      setTimeout(() => btn.innerHTML = original, 900);
+    }
+
+    function updateCartUI() {
+      const count = cart.reduce((s, i) => s + i.qty, 0);
+      document.getElementById('cartCount').textContent = count;
+
+      const container = document.getElementById('cartItems');
+      if (cart.length === 0) {
+        container.innerHTML = '<p class="text-muted text-center py-5">Your bag is empty</p>';
+        document.getElementById('cartTotal').textContent = '0';
+        return;
+      }
+
+      container.innerHTML = cart.map(item => `
+        <div class="cart-item d-flex align-items-center gap-3">
+          <img src="${item.image}" alt="${item.name}">
+          <div class="flex-grow-1">
+            <h6 class="mb-1">${item.name}</h6>
+            <small class="text-muted">₹${formatPrice(item.price)} × ${item.qty}</small>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <button class="btn btn-sm btn-outline-secondary rounded-circle" onclick="changeQty(${item.id}, -1)">−</button>
+            <span class="fw-semibold">${item.qty}</span>
+            <button class="btn btn-sm btn-outline-secondary rounded-circle" onclick="changeQty(${item.id}, 1)">+</button>
+            <button class="btn btn-sm text-danger ms-2" onclick="removeFromCart(${item.id})">
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+
+      const total = cart.reduce((s, i) => s + (i.price * i.qty), 0);
+      document.getElementById('cartTotal').textContent = formatPrice(total);
+    }
+
+    function changeQty(id, delta) {
+      const item = cart.find(i => i.id === id);
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
+      updateCartUI();
+    }
+
+    function removeFromCart(id) {
+      cart = cart.filter(i => i.id !== id);
+      updateCartUI();
+    }
+
+    document.getElementById('checkoutBtn').addEventListener('click', () => {
+      if (cart.length === 0) {
+        alert('Your bag is empty!');
+        return;
+      }
+      alert(`Thank you for your purchase!\nTotal: ₹${document.getElementById('cartTotal').textContent}\n\nThis is a demo website.`);
+      cart = [];
+      updateCartUI();
+      bootstrap.Modal.getInstance(document.getElementById('cartModal')).hide();
+    });
+
+    window.addEventListener('scroll', () => {
+      document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    function observeElements() {
+      const elements = document.querySelectorAll('.animate-on-scroll');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.15 });
+      elements.forEach(el => observer.observe(el));
+    }
+
+    // Start
+    renderProducts();
+    observeElements();
+  </script>
+</body>
+</html>
